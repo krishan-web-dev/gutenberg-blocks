@@ -1,0 +1,17 @@
+{
+    "apiVersion": 2,
+    "name": "hmdecor/hero-widget",
+    "title": "Hero Widget",
+    "category": "hmdecor-blocks",
+    "attributes": {
+        "title": { "type": "string", "default": "Hero Title" },
+        "paragraph": { "type": "string", "default": "Hero Description" },
+        "imageUrl": { "type": "string", "default": "" },
+        "buttonText": { "type": "string", "default": "Learn More" },
+        "buttonUrl": { "type": "string", "default": "" },
+        "newTab": { "type": "boolean", "default": false }
+    },
+    "editorScript": "file:./index.js",
+    "style": "file:../../assets/css/frontend.css",
+    "editorStyle": "file:../../assets/css/editor.css"
+}

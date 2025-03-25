@@ -1,0 +1,19 @@
+{
+    "apiVersion": 2,
+    "name": "hmdecor/featured-products",
+    "title": "Featured Products",
+    "category": "hmdecor-blocks",
+    "icon": "cart",
+    "description": "Display WooCommerce featured products dynamically.",
+    "supports": {
+        "align": true,
+        "spacing": { "margin": true, "padding": true },
+        "color": { "text": true, "background": true }
+    },
+    "attributes": {
+        "numProducts": { "type": "number", "default": 4 }
+    },
+    "editorScript": "file:./index.js",
+    "style": "file:../../assets/css/frontend.css",
+    "editorStyle": "file:../../assets/css/editor.css"
+}
