@@ -14,7 +14,8 @@ if (!defined('ABSPATH')) {
 // Register Custom Gutenberg Block (Hero Widget)
 function hmdecor_register_blocks() {
     register_block_type(__DIR__ . '/blocks/hero-widget');
-    register_block_type(__DIR__ . '/blocks/featured-products'); // Ensure path is correct
+    register_block_type(__DIR__ . '/blocks/featured-products');
+    register_block_type(__DIR__ . '/blocks/cta-widget');
 }
 add_action('init', 'hmdecor_register_blocks');
 

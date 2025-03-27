@@ -40,7 +40,7 @@ const Edit = ({ attributes, setAttributes }) => {
                         value={attributes.title}
                         onChange={(value) => setAttributes({ title: value })}
                         placeholder="Enter Title"
-                        allowedFormats={[]}  // ✅ Disables extra formatting like Bold, Italic
+                        allowedFormats={[]} 
                     />
 
                     <RichText
@@ -49,7 +49,7 @@ const Edit = ({ attributes, setAttributes }) => {
                         value={attributes.paragraph}
                         onChange={(value) => setAttributes({ paragraph: value })}
                         placeholder="Enter Description"
-                        allowedFormats={[]}  // ✅ Disables extra formatting
+                        allowedFormats={[]}
                     />                    
 
                     {/* Button in Editor (Using a Div) */}
@@ -60,7 +60,7 @@ const Edit = ({ attributes, setAttributes }) => {
                             onChange={(value) => setAttributes({ buttonText: value })}
                             placeholder="Shop"
                             keepPlaceholderOnFocus
-                            allowedFormats={[]}  // ✅ Disables extra formatting
+                            allowedFormats={[]} 
                         />
                     </div>
                 </div>

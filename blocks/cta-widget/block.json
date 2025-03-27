@@ -1,0 +1,16 @@
+{
+    "apiVersion": 2,
+    "name": "hmdecor/cta-widget",
+    "title": "CTA with Button",
+    "category": "hmdecor-blocks",
+    "icon": "megaphone",
+    "description": "A call-to-action block with a background image and button.",
+    "attributes": {
+        "title": { "type": "string", "default": "" },
+        "paragraph": { "type": "string", "default": "" },
+        "bgImage": { "type": "string", "default": "" },
+        "buttonText": { "type": "string", "default": "" },
+        "buttonUrl": { "type": "string", "default": "" }
+    },
+    "editorScript": "file:./index.js"
+}

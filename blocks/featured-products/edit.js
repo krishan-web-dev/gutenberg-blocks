@@ -1,49 +1,74 @@
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
-import { PanelBody, RangeControl } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
+import { useBlockProps, RichText } from "@wordpress/block-editor";
+import { useSelect } from "@wordpress/data";
+import { Spinner } from "@wordpress/components";
 
-const Edit = ({ attributes, setAttributes }) => {
-    const { numProducts } = attributes;
+const Edit = (props) => {
+  const { attributes, setAttributes } = props;
+  const { title, numProducts } = attributes;
+  const blockProps = useBlockProps();
 
-    // Fetch featured products from WooCommerce
-    const products = useSelect((select) => {
-        const query = { featured: true, per_page: numProducts };
-        return select('core').getEntityRecords('postType', 'product', query);
-    }, [numProducts]);
+  // Fetch products
+  const { products, isLoading } = useSelect(
+    (select) => {
+      const { getEntityRecords } = select("core");
+      const query = {
+        per_page: numProducts,
+        featured: true,
+        _embed: true, // Include featured media
+      };
 
-    return (
-        <div {...useBlockProps()}>
-            {/* Sidebar Settings */}
-            <InspectorControls>
-                <PanelBody title="Settings">
-                    <RangeControl
-                        label="Number of Products"
-                        value={numProducts}
-                        onChange={(value) => setAttributes({ numProducts: value })}
-                        min={1}
-                        max={12}
-                    />
-                </PanelBody>
-            </InspectorControls>
+      return {
+        products: getEntityRecords("postType", "product", query),
+        isLoading: !select("core").hasFinishedResolution("getEntityRecords", [
+          "postType",
+          "product",
+          query,
+        ]),
+      };
+    },
+    [numProducts]
+  );
 
-            <div className="wc-featured-products grid grid-cols-2 gap-4">
-                {products && products.length > 0 ? (
-                    products.map((product) => (
-                        <div key={product.id} className="product-card bg-white p-4 shadow rounded">
-                            <img src={product.images[0]?.src} alt={product.name} className="w-full h-40 object-cover" />
-                            <h3 className="text-lg font-bold mt-2">{product.name}</h3>
-                            <p className="text-green-600 font-bold">{product.price_html}</p>
-                            <a href={product.permalink} className="block bg-blue-500 text-white px-4 py-2 mt-2 rounded text-center">
-                                View Product
-                            </a>
-                        </div>
-                    ))
-                ) : (
-                    <p>No featured products found.</p>
+  const handleTitleChange = (newTitle) => {
+    setAttributes({ title: newTitle });
+  };
+
+  return (
+    <section {...blockProps}>
+      <RichText
+        tagName="h3"
+        value={title}
+        onChange={handleTitleChange}
+        placeholder="Enter a title"
+      />
+
+      {isLoading ? (
+        <Spinner />
+      ) : products?.length > 0 ? (
+        <ul>
+          {products.map((product) => (
+            <li key={product.id}>
+              <figure>
+                {product._embedded?.["wp:featuredmedia"]?.[0]?.source_url && (
+                  <img
+                    src={product._embedded["wp:featuredmedia"][0].source_url}
+                    alt={product.title.rendered}
+                    width="100"
+                  />
                 )}
-            </div>
-        </div>
-    );
+              </figure>
+              <p dangerouslySetInnerHTML={{ __html: product.title.rendered }} />
+              <a href={product.link} target="_blank" rel="noopener noreferrer">
+                View Product
+              </a>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>No products found.</p>
+      )}
+    </section>
+  );
 };
 
 export default Edit;
